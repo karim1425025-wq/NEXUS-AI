@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Nexus | Cosmic V6</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Cosmic Palette */
+            --primary: #8b5cf6; /* Violet */
+            --primary-glow: rgba(139, 92, 246, 0.5);
+            --secondary: #6366f1;
+            --glass: rgba(10, 15, 30, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text: #f8fafc;
+            --card-radius: 20px;
+        }
+
+        body.light-mode {
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text: #0f172a;
+            --primary: #7c3aed;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); outline: none; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0; min-height: 100vh;
+            /* نفس الخلفية الهادئة (Night Sky) */
+            background: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2000') no-repeat center center fixed;
+            background-size: cover;
+            background-color: #020617;
+            color: var(--text); overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes cosmicEntrance {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* Header */
+        header {
+            background: var(--glass); backdrop-filter: blur(16px);
+            padding: 1rem 5%; border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+            animation: cosmicEntrance 0.8s ease-out;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif; font-size: 1.6rem;
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: flex; align-items: center; gap: 10px;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .controls { display: flex; gap: 10px; }
+        .btn-glass {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: var(--text); padding: 8px 16px; border-radius: 12px;
+            cursor: pointer; font-family: inherit; font-weight: bold;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-glass:hover {
+            background: var(--primary); color: white; border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow); transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 900px; margin: 40px auto; padding: 30px;
+            background: var(--glass); border-radius: 24px;
+            border: 1px solid var(--glass-border); backdrop-filter: blur(20px);
+            text-align: center; animation: cosmicEntrance 1s ease-out 0.2s backwards;
+        }
+
+        .input-group {
+            display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
+            background: rgba(0,0,0,0.2); padding: 8px; border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        input {
+            flex: 1; background: transparent; border: none; padding: 12px;
+            color: var(--text); font-size: 1rem; font-family: inherit; min-width: 200px;
+        }
+        
+        .btn-add {
+            background: var(--primary); color: white; border: none;
+            padding: 10px 25px; border-radius: 12px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+        .btn-add:hover { transform: scale(1.05); box-shadow: 0 6px 25px var(--primary-glow); }
+
+        /* Grid */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px; max-width: 1400px; margin: 0 auto; padding: 20px 5%;
+        }
+
+        .card {
+            background: var(--glass); border-radius: var(--card-radius);
+            border: 1px solid var(--glass-border); overflow: hidden;
+            display: flex; flex-direction: column; position: relative;
+            backdrop-filter: blur(12px);
+            animation: cosmicEntrance 0.6s backwards;
+            transition: all 0.4s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-color: var(--primary);
+        }
+
+        .card-img {
+            width: 100%; height: 180px; object-fit: cover;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 5px; color: var(--text); }
+        .card-desc { font-size: 0.9rem; opacity: 0.8; line-height: 1.6; margin-bottom: 15px; flex: 1; }
+        
+        .card-footer {
+            padding-top: 15px; border-top: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .card-link { text-decoration: none; color: var(--primary); font-weight: bold; cursor: pointer;}
+        .card-link:hover { text-decoration: underline; }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed; bottom: 30px; right: 30px; width: 360px; height: 500px;
+            background: rgba(10, 15, 30, 0.98); border-radius: 24px;
+            border: 1px solid var(--primary); z-index: 9999;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* Minimized State */
+        .chat-widget.minimized {
+            width: 65px; height: 65px; border-radius: 50%;
+            cursor: pointer; background: var(--primary);
+            border: 4px solid rgba(255,255,255,0.2);
+            align-items: center; justify-content: center;
+        }
+        
+        .chat-widget.minimized .chat-header,
+        .chat-widget.minimized .chat-body,
+        .chat-widget.minimized .chat-input-area { display: none !important; }
+
+        .chat-widget.minimized::after {
+            content: '\f544'; /* Robot Icon */
+            font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            color: white; font-size: 1.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        .chat-header {
+            padding: 15px; background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer;
+        }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 0.9rem; }
+        .msg-ai { background: rgba(255,255,255,0.1); border-right: 3px solid var(--primary); align-self: flex-start; }
+        .msg-user { background: var(--primary); color: white; align-self: flex-end; }
+        .chat-input-area { padding: 15px; display: flex; gap: 8px; border-top: 1px solid var(--glass-border); }
+
+        /* Modal */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #1e293b; padding: 25px; border-radius: 20px; border: 1px solid var(--primary); width: 90%; max-width: 400px; text-align: center; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><i class="fas fa-atom fa-spin"></i> NEXUS AI</div>
+        <div class="controls">
+            <button class="btn-glass" id="langBtn" onclick="toggleLang()">EN</button>
+            <button class="btn-glass" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
+            <button class="btn-glass" onclick="openSettings()"><i class="fas fa-key"></i> API</button>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1 id="heroTitle" style="margin:0 0 10px 0;">مركز المشاريع الكوني</h1>
+        <p id="heroDesc" style="opacity:0.7; margin:0;">نظام إدارة ذكي مدعوم بتقنيات Gemini</p>
+        
+        <div class="input-group">
+            <input type="text" id="projName" placeholder="اسم المشروع...">
+            <input type="text" id="projUrl" placeholder="الرابط (URL)...">
+            <button class="btn-add" onclick="addProject()"><i class="fas fa-rocket"></i> <span id="btnAdd">إطلاق</span></button>
+        </div>
+    </div>
+
+    <div class="grid-container" id="projectGrid"></div>
+
+    <div class="chat-widget minimized" id="chatWidget" onclick="handleWidgetClick(event)">
+        <div class="chat-header">
+            <span style="font-weight:bold; color:var(--primary)"><i class="fas fa-robot"></i> المساعد الذكي</span>
+            <i class="fas fa-chevron-down" onclick="toggleChat(event)"></i>
+        </div>
+        <div class="chat-body" id="chatBox">
+            <div class="msg msg-ai">أهلاً! كيف يمكنني مساعدتك؟</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="اكتب رسالة..." style="flex:1; background:rgba(255,255,255,0.1); border:none; padding:10px; border-radius:8px; color:white;">
+            <button class="btn-add" onclick="sendChat()" style="padding: 8px 15px;"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color:var(--primary); margin-top:0;">Gemini API Key</h3>
+            <input type="password" id="apiKeyInput" placeholder="sk-..." style="width:100%; padding:10px; margin-bottom:20px; background:rgba(0,0,0,0.3); border:1px solid #555; color:white; border-radius:8px;">
+            <button class="btn-add" style="width:100%" onclick="saveSettings()">حفظ</button>
+            <button style="background:none; border:none; color:#ef4444; margin-top:10px; cursor:pointer;" onclick="document.getElementById('settingsModal').style.display='none'">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        // --- الصور والمحتوى ---
+        const projectImages = [
+            "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800",
+            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800",
+            "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800",
+            "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800",
+            "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800",
+            "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=800"
+        ];
+
+        const texts = {
+            ar: { title: "مركز المشاريع", desc: "نظام إدارة ذكي", ph1: "اسم المشروع...", ph2: "الرابط...", btn: "إطلاق", visit: "زيارة" },
+            en: { title: "Project Center", desc: "Smart Management System", ph1: "Project Name...", ph2: "Link URL...", btn: "Launch", visit: "Visit" }
+        };
+
+        let projects = JSON.parse(localStorage.getItem('nexus_v5_projects') || '[]');
+        let apiKey = localStorage.getItem('nexus_api_key') || '';
+        let lang = localStorage.getItem('nexus_lang') || 'ar';
+        let isLight = false;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyLang();
+            renderProjects();
+        });
+
+        function handleWidgetClick(e) {
+            const w = document.getElementById('chatWidget');
+            if (w.classList.contains('minimized')) {
+                w.classList.remove('minimized');
+            }
+        }
+
+        function toggleChat(e) {
+            e.stopPropagation();
+            const w = document.getElementById('chatWidget');
+            w.classList.toggle('minimized');
+        }
+
+        function getNextImage(index) {
+            return projectImages[index % projectImages.length];
+        }
+
+        function addProject() {
+            const name = document.getElementById('projName').value.trim();
+            const urlRaw = document.getElementById('projUrl').value.trim();
+
+            if(!name && !urlRaw) return;
+
+            const newProj = {
+                id: Date.now(),
+                name: name || (lang==='ar'?'مشروع جديد':'New Project'),
+                url: urlRaw || '#',
+                desc: lang==='ar'?'...':'...',
+                img: getNextImage(projects.length), 
+                tag: 'NEW'
+            };
+
+            projects.unshift(newProj);
+            saveData();
+            renderProjects();
+            
+            document.getElementById('projName').value = '';
+            document.getElementById('projUrl').value = '';
+
+            if(apiKey) enhanceAI(newProj.id, newProj.name);
+        }
+
+        // --- التعديل الجذري لإصلاح الروابط ---
+        function renderProjects() {
+            const grid = document.getElementById('projectGrid');
+            grid.innerHTML = '';
+            
+            projects.forEach((p, idx) => {
+                // إصلاح الرابط تلقائياً قبل العرض
+                let safeUrl = p.url;
+                if(safeUrl && !safeUrl.startsWith('http') && safeUrl !== '#') {
+                    safeUrl = 'https://' + safeUrl;
+                }
+
+                grid.innerHTML += `
+                    <div class="card" style="animation-delay:${idx*0.1}s">
+                        <img src="${p.img}" class="card-img" alt="bg">
+                        <div class="card-body">
+                            <div class="card-title">${p.name}</div>
+                            <div class="card-desc">${p.desc}</div>
+                            <div class="card-footer">
+                                <a href="${safeUrl}" target="_blank" class="card-link"><i class="fas fa-external-link-alt"></i> ${texts[lang].visit}</a>
+                                <button onclick="delProject(${p.id})" style="background:none;border:none;color:#ef4444;cursor:pointer"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function delProject(id) {
+            if(confirm('Delete?')) { projects = projects.filter(p=>p.id!==id); saveData(); renderProjects(); }
+        }
+
+        async function enhanceAI(id, name) {
+            try {
+                const res = await callGemini(`Analyze project "${name}". Return JSON: {"desc": "Short description in ${lang}", "tag": "Category"}`);
+                const data = JSON.parse(res);
+                const p = projects.find(x=>x.id===id);
+                if(p) { p.desc = data.desc; p.tag = data.tag; saveData(); renderProjects(); }
+            } catch(e) {}
+        }
+
+        async function sendChat() {
+            const inp = document.getElementById('chatInput');
+            const txt = inp.value.trim();
+            if(!txt) return;
+
+            event.stopPropagation();
+
+            const box = document.getElementById('chatBox');
+            box.innerHTML += `<div class="msg msg-user">${txt}</div>`;
+            inp.value = '';
+
+            if(!apiKey) {
+                box.innerHTML += `<div class="msg msg-ai">الرجاء إضافة API Key من الإعدادات.</div>`;
+                return;
+            }
+
+            try {
+                const prompt = `User: "${txt}". Lang: ${lang}. If asked to sort, reply JSON {"action":"sort"}. Else reply normally in text.`;
+                const res = await callGemini(prompt);
+                
+                try {
+                    const cmd = JSON.parse(res);
+                    if(cmd.action === 'sort') {
+                        projects.sort((a,b)=>a.name.localeCompare(b.name));
+                        saveData(); renderProjects();
+                        box.innerHTML += `<div class="msg msg-ai">تم ترتيب المشاريع.</div>`;
+                    } else {
+                        box.innerHTML += `<div class="msg msg-ai">${res}</div>`;
+                    }
+                } catch(e) {
+                    box.innerHTML += `<div class="msg msg-ai">${res}</div>`;
+                }
+            } catch(e) {
+                box.innerHTML += `<div class="msg msg-ai">خطأ في الاتصال.</div>`;
+            }
+            box.scrollTop = box.scrollHeight;
+        }
+
+        async function callGemini(txt) {
+            const u = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            const r = await fetch(u, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({contents:[{parts:[{text:txt}]}]})});
+            const d = await r.json();
+            return d.candidates[0].content.parts[0].text.replace(/```json|```/g,'').trim();
+        }
+
+        function saveData() { localStorage.setItem('nexus_v5_projects', JSON.stringify(projects)); }
+        function openSettings() { document.getElementById('settingsModal').style.display = 'flex'; }
+        function saveSettings() { apiKey=document.getElementById('apiKeyInput').value; localStorage.setItem('nexus_api_key', apiKey); document.getElementById('settingsModal').style.display='none'; }
+        
+        function toggleTheme() {
+            isLight = !isLight;
+            document.body.classList.toggle('light-mode');
+        }
+
+        function toggleLang() {
+            lang = lang==='ar'?'en':'ar';
+            localStorage.setItem('nexus_lang', lang);
+            applyLang();
+            renderProjects();
+        }
+
+        function applyLang() {
+            document.documentElement.dir = lang==='ar'?'rtl':'ltr';
+            const t = texts[lang];
+            document.getElementById('heroTitle').innerText = t.title;
+            document.getElementById('heroDesc').innerText = t.desc;
+            document.getElementById('projName').placeholder = t.ph1;
+            document.getElementById('projUrl').placeholder = t.ph2;
+            document.getElementById('btnAdd').innerText = t.btn;
+            document.getElementById('langBtn').innerText = lang==='ar'?'EN':'عربي';
+        }
+        
+        document.getElementById('chatInput').addEventListener('click', (e) => e.stopPropagation());
+
+    </script>
+</body>
+</html>
